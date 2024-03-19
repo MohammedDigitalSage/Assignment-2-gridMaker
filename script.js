@@ -1,45 +1,112 @@
 // Declare global variables
 let numRows = 0;
 let numCols = 0;
-let colorSelected; 
+let colorSelected;
 
-// Add a row
+// Function to add a row
 function addR() {
-    alert("Clicked Add Row"); // Replace this line with your code.
+    let table = document.getElementById("grid");
+    let newRow = table.insertRow();
+    numRows++;
+
+    // If it's the first row, set number of columns to 1
+    if (numCols === 0) {
+        numCols = 1;
+    }
+
+    // Add cells to the new row
+    for (let i = 0; i < numCols; i++) {
+        let newCell = newRow.insertCell();
+        // Add event listener to each cell for color selection
+        newCell.addEventListener("click", function() {
+            newCell.style.backgroundColor = colorSelected;
+        });
+    }
 }
 
-// Add a column
+// Function to add a column
 function addC() {
-    alert("Clicked Add Col"); // Replace this line with your code.
+    let table = document.getElementById("grid");
+    numCols++;
+
+    // If it's the first column and there are no rows, add a row
+    if (numRows === 0) {
+        addR();
+    } else {
+        // Add cells to each row
+        for (let i = 0; i < numRows; i++) {
+            let newRow = table.rows[i];
+            let newCell = newRow.insertCell(0);
+            // Add event listener to each cell for color selection
+            newCell.addEventListener("click", function() {
+                newCell.style.backgroundColor = colorSelected;
+            });
+        }
+    }
 }
 
-// Remove a row
+// Function to remove a row
 function removeR() {
-    alert("Clicked Remove Row"); // Replace this line with your code.
+    let table = document.getElementById("grid");
+    if (numRows > 0) {
+        table.deleteRow(numRows - 1);
+        numRows--;
+    }
 }
 
-// Remove a column
+// Function to remove a column
 function removeC() {
-    alert("Clicked Remove Col"); // Replace this line with your code.
+    let table = document.getElementById("grid");
+    if (numCols > 0) {
+        for (let i = 0; i < numRows; i++) {
+            table.rows[i].deleteCell(-1);
+        }
+        numCols--;
+    }
 }
 
-// Set global variable for selected color
-function selectColor(){
+// Function to set the selected color
+function selectColor() {
     colorSelected = document.getElementById("selectedColorId").value;
-    console.log(colorSelected);
 }
 
-// Fill all uncolored cells
-function fillU(){
-    alert("Clicked Fill All Uncolored"); // Replace this line with your code.
+// Function to fill all uncolored cells with selected color
+function fillU() {
+    let table = document.getElementById("grid");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        for (let j = 0; j < cells.length; j++) {
+            if (!cells[j].style.backgroundColor || cells[j].style.backgroundColor === "white") {
+                cells[j].style.backgroundColor = colorSelected;
+            }
+        }
+    }
 }
 
-// Fill all cells
-function fillAll(){
-    alert("Clicked Fill All"); // Replace this line with your code.
+// Function to fill all cells with selected color
+function fillAll() {
+    let table = document.getElementById("grid");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        for (let j = 0; j < cells.length; j++) {
+            cells[j].style.backgroundColor = colorSelected;
+        }
+    }
 }
 
-// Clear all cells
-function clearAll(){
-    alert("Clicked Clear All"); // Replace this line with your code.
+// Function to clear all cells
+function clearAll() {
+    let table = document.getElementById("grid");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        for (let j = 0; j < cells.length; j++) {
+            cells[j].style.backgroundColor = "white";
+        }
+    }
 }
