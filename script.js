@@ -1,3 +1,10 @@
+// Mohammed - Practical Web Development
+// Assignment Two - Grid Maker
+// Three Files:
+// - index.html
+// - style.css
+// - script.js
+
 // Declare global variables
 let numRows = 0;
 let numCols = 0;
